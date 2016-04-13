@@ -8,7 +8,7 @@ SHAREDDIR=$HOME/devel/docker/share
 docker run --publish=2222:22 --publish=8000:8000 --detach=true --hostname=$NAME --name=$NAME \
 	--privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-v $MIRRORDIR:/home/devel/mirror \
-	-v $SHAREDDIR/share:/home/devel/share \
+	-v $SHAREDDIR:/home/devel/share \
 	-v $XDTDIR:/xdt \
 	-it docker.iot.bzh/iotbzh/worker_bsp_base:2.0
 
