@@ -5,7 +5,7 @@ MIRRORDIR=$HOME/ssd/localmirror
 XDTDIR=$HOME/ssd/xdt
 SHAREDDIR=$HOME/devel/docker/share
 
-docker run --publish=2222:22 --publish=8000:8000 --publish=69:69/udp --detach=true --hostname=$NAME --name=$NAME \
+docker run --publish=2222:22 --publish=8000:8000 --publish=69:69/udp --publish=10809:10809 --detach=true --hostname=$NAME --name=$NAME \
 	--privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-v $MIRRORDIR:/home/devel/mirror \
 	-v $SHAREDDIR:/home/devel/share \
