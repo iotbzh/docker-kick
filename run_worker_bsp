@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NAME=bsp-devkit
+NAME=bsp-devkit-$(hostname|cut -f1 -d'.')
 MIRRORDIR=$HOME/ssd/localmirror
 XDTDIR=$HOME/ssd/xdt
 SHAREDDIR=$HOME/devel/docker/share
