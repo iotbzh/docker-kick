@@ -13,10 +13,8 @@ docker run --publish=2222:22 --publish=8000:8000 --publish=69:69/udp --publish=1
 	-it docker.iot.bzh/iotbzh/worker_bsp_base:2.0
 
 echo "Copying your identity to container $NAME:"
-sleep 2
+sleep 5
 ssh-copy-id -p 2222 devel@localhost
-
-scp -P 2222  $HOME/.gitconfig devel@localhost:~/
 
 echo "You can now login using:"
 echo "   ssh -p 2222 devel@$(hostname)"
