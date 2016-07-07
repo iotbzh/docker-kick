@@ -1,0 +1,21 @@
+#!/bin/bash
+
+NAME=sdk-devkit-$(hostname|cut -f1 -d'.')
+MIRRORDIR=$HOME/ssd/localmirror
+XDTDIR=$HOME/ssd/xdt_sdk
+SHAREDDIR=$HOME/devel/docker/share
+
+docker run --publish=2223:22 --publish=8001:8000 --publish=70:69/udp --publish=10810:10809 --detach=true --hostname=$NAME --name=$NAME \
+	--privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+	-v $MIRRORDIR:/home/devel/mirror \
+	-v $SHAREDDIR:/home/devel/share \
+	-v $XDTDIR:/xdt \
+	-it docker.iot.bzh/iotbzh/worker_bsp_base:2.0
+
+echo "Copying your identity to container $NAME:"
+sleep 5
+ssh-copy-id -p 2223 devel@localhost
+
+echo "You can now login using:"
+echo "   ssh -p 2223 devel@$(hostname)"
+
