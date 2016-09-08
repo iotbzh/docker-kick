@@ -1,11 +1,28 @@
 #!/bin/bash
 
-NAME=bsp-devkit-$(hostname|cut -f1 -d'.')
+case $1 in 
+	-h|--help)
+		echo "Usage: $(basename $0) <instance ID>"  >&2
+		echo "Instance ID must be 0 or a positive integer (1,2,...)" >&2
+		exit 1
+		;;
+esac
+
+ID=${1:-0}
+USER=$(id -un)
+echo "Using instance ID #$ID (user $(id -un))"
+
+NAME=bsp-devkit-$(hostname|cut -f1 -d'.')-$ID-$USER
 MIRRORDIR=$HOME/ssd/localmirror
 XDTDIR=$HOME/ssd/xdt
 SHAREDDIR=$HOME/devel/docker/share
 
-docker run --publish=2222:22 --publish=8000:8000 --publish=69:69/udp --publish=10809:10809 --detach=true --hostname=$NAME --name=$NAME \
+SSH_PORT=$((2222 + ID))
+WWW_PORT=$((8000 + ID))
+BOOT_PORT=$((69 + ID))
+NBD_PORT=$((10809 + ID))
+
+docker run --publish=${SSH_PORT}:22 --publish=${WWW_PORT}:8000 --publish=${BOOT_PORT}:69/udp --publish=${NBD_PORT}:10809 --detach=true --hostname=$NAME --name=$NAME \
 	--privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-v $MIRRORDIR:/home/devel/mirror \
 	-v $SHAREDDIR:/home/devel/share \
@@ -17,5 +34,5 @@ sleep 5
 ssh-copy-id -p 2222 devel@localhost
 
 echo "You can now login using:"
-echo "   ssh -p 2222 devel@$(hostname)"
+echo "   ssh -p $SSH_PORT devel@$(hostname)"
 
