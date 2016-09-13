@@ -31,7 +31,7 @@ docker run --publish=${SSH_PORT}:22 --publish=${WWW_PORT}:8000 --publish=${BOOT_
 
 echo "Copying your identity to container $NAME:"
 sleep 5
-ssh-copy-id -p 2222 devel@localhost
+ssh-copy-id -p $SSH_PORT devel@$(hostname)
 
 echo "You can now login using:"
 echo "   ssh -p $SSH_PORT devel@$(hostname)"
