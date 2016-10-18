@@ -13,8 +13,8 @@ USER=$(id -un)
 echo "Using instance ID #$ID (user $(id -un))"
 
 NAME=bsp-devkit-$(hostname|cut -f1 -d'.')-$ID-$USER
-MIRRORDIR=$HOME/ssd/localmirror
-XDTDIR=$HOME/ssd/xdt
+MIRRORDIR=$HOME/ssd/localmirror_$ID
+XDTDIR=$HOME/ssd/xdt_$ID
 SHAREDDIR=$HOME/devel/docker/share
 
 SSH_PORT=$((2222 + ID))
@@ -22,6 +22,7 @@ WWW_PORT=$((8000 + ID))
 BOOT_PORT=$((69 + ID))
 NBD_PORT=$((10809 + ID))
 
+mkdir -p $MIRRORDIR $XDTDIR $SHAREDDIR
 docker run --publish=${SSH_PORT}:22 --publish=${WWW_PORT}:8000 --publish=${BOOT_PORT}:69/udp --publish=${NBD_PORT}:10809 --detach=true --hostname=$NAME --name=$NAME \
 	--privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	-v $MIRRORDIR:/home/devel/mirror \
