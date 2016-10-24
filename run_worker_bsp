@@ -28,7 +28,7 @@ docker run --publish=${SSH_PORT}:22 --publish=${WWW_PORT}:8000 --publish=${BOOT_
 	-v $MIRRORDIR:/home/devel/mirror \
 	-v $SHAREDDIR:/home/devel/share \
 	-v $XDTDIR:/xdt \
-	-it docker.iot.bzh/iotbzh/worker_bsp_base:2.0
+	-it docker.iot.bzh/iotbzh/worker_bsp_base:2.2
 
 echo "Copying your identity to container $NAME:"
 sleep 5
